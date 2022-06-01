@@ -1,4 +1,4 @@
-println();//Global Variables
+//Global Variables
 //
 void setup() {}//End setup
 //
