@@ -13,12 +13,11 @@ AudioPlayer[] song = new AudioPlayer[numberOfSongs]; //creates a "Play List" var
 AudioMetaData[] songMetaData = new AudioMetaData[numberOfSongs];
 //
 int currentSong = numberOfSongs - numberOfSongs;
-color black=0, purple=#2C08FF; //Comparison of Gray Scale and Hexidecimal
+color black=0, purple=#2C08FF; 
 PFont titleFont;
 //
 void setup()
 {
-  //size(500, 600); //Remind you of Display Geometry
   minim = new Minim(this); //load from data directroy, loadFile() should also load from project folder, like loadImage()
   song[currentSong] = minim.loadFile("MusicDownload/groove.mp3"); //able to pass absolute paths, file name & extesnion, and URL
   song[currentSong+=1] = minim.loadFile("MusicDownload/The_Simplest.mp3");
