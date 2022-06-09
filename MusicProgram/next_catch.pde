@@ -1,7 +1,7 @@
-void nextButtonArrayCatch() {
-  if ( currentSong >= song.length-1 ) { //CATCH ArrayIndexOutOfBoundsException
-    currentSong -= currentSong; //Beginning of Play List
+void playListArrayError() { //Deals with Error: ArrayIndexOutOfBounds
+  if ( currentSong >= numberOfSongs - 1 ) { //Throws error: ArrayIndexOutOfBounds
+    currentSong = numberOfSongs - numberOfSongs;
   } else {
     currentSong++;
-  }//End of CATCH
-}//End nextButtonArrayCatch
+  }//End Catch "ArrayIndexOutOfBounds"
+}//End PlayListArrayError
