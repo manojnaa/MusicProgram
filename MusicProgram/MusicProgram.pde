@@ -1,4 +1,3 @@
-
 //Libraries: uses Sketch / Import Library / Add Library / Minim
 import ddf.minim.*;
 import ddf.minim.analysis.*;
