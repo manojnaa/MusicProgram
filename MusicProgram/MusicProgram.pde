@@ -13,11 +13,12 @@ AudioPlayer[] song = new AudioPlayer[numberOfSongs]; //creates a "Play List" var
 AudioMetaData[] songMetaData = new AudioMetaData[numberOfSongs];
 //
 int currentSong = numberOfSongs - numberOfSongs;
-color black=0, purple=#2C08FF; 
+color black=0, purple=#2C08FF; //Comparison of Gray Scale and Hexidecimal
 PFont titleFont;
 //
 void setup()
 {
+  //size(500, 600); //Remind you of Display Geometry
   minim = new Minim(this); //load from data directroy, loadFile() should also load from project folder, like loadImage()
   song[currentSong] = minim.loadFile("MusicDownload/groove.mp3"); //able to pass absolute paths, file name & extesnion, and URL
   song[currentSong+=1] = minim.loadFile("MusicDownload/The_Simplest.mp3");
@@ -56,7 +57,7 @@ void draw()
   fill(purple); //Ink, hexidecimal copied from Color Selector
   textAlign (CENTER, CENTER); //Align X&Y, see Processing.org / Reference
   //Values: [LEFT | CENTER | RIGHT] & [TOP | CENTER | BOTTOM | BASELINE]
-  textFont(titleFont, 8); //Change the number until it fits, largest font size
+  textFont(titleFont, 12); //Change the number until it fits, largest font size
   text(songMetaData[currentSong].title(), width*1/4, height*0, width*1/2, height*1/10);
   fill(255); //Reset to white for rest of the program
   //
@@ -64,15 +65,11 @@ void draw()
 //
 void keyPressed()
 {
-  //First Play Button: if ( key=='p' || key=='P' ) song1.play();
-  //Update Play Button for Play-Pause
-  //Fixes Error: pausing near end of song causes confusion for end-user when "play" does not 
   if ( key=='p' || key=='P' ) {
     if ( song[currentSong].isPlaying() ) { 
       song[currentSong].pause();
     } else if ( song[currentSong].position() >= song[currentSong].length()-song[currentSong].length()*1/5 ) {//Special Situation: at the end of the song, rewind (built-in stop button)
-      //End of Song Calculation: hardcode "ending of song" within 1 second of End-Of-File, song1.length()-1000
-      //Alternate End of Song Calculation: listen to 80% of the song, last 20% is "The End"
+     
       song[currentSong].rewind();
       song[currentSong].play();
     } else { 
@@ -117,6 +114,15 @@ void keyPressed()
     } else {
       song[currentSong].rewind();
     }
+  }
+  //
+ if ( key=='s' || key=='S' ) {//STOP Button
+   if ( song[currentSong].isPlaying() ) {
+     song[currentSong].pause();
+     song[currentSong].rewind();
+   } else {
+     song[currentSong].rewind();
+   }
   }//End Stop Button
   //
   if ( key=='n' || key=='N' ) {
@@ -142,4 +148,55 @@ void keyPressed()
 void mousePressed() {
 }//End mousePressed
 //
-//End MAIN
+//End MAIN 
+import ddf.minim.analysis.*;
+import ddf.minim.*;
+ 
+Minim minim;
+AudioPlayer jingle;
+AudioInput input;
+FFT fft;
+int[][] colo=new int[300][3];
+//AudioIn in;
+ 
+void setup()
+{
+  size(480, 320);
+   //fullScreen();
+  noCursor();
+ 
+ 
+  minim = new Minim(this);
+ 
+ 
+  input = minim.getLineIn();
+ 
+  fft = new FFT(input.bufferSize(), input.sampleRate());
+ 
+ // textFont(createFont("Arial", 16));
+ 
+ // windowName = "None";
+}
+ 
+void draw()
+{
+  background(0);
+  stroke(255);
+ 
+  fft.forward(input.mix);
+//512 values below --> this loop is called 25 times per second
+//try getting the highest value and making a shape based on that value
+//maybe change color based on the size of the value?
+  for(int i = 0; i < fft.specSize(); i++)
+  {
+ 
+ 
+ 
+    // fft.getBand(i); //this is float which is very much like a double
+ 
+ 
+}
+ 
+  // keep us informed about the window being used
+ // text("The window being used is: " + windowName, 5, 20);
+}
